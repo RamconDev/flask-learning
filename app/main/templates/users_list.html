@@ -1,0 +1,16 @@
+<h1>Lista de usuarios</h1>
+<div>
+    <ul>
+        {% for user in users %}
+                <li>
+                    {{ user.id }}
+                    <ul>
+                        <li>Name: {{ user.name }}</li>
+                        <li>Username: {{ user.username }}</li>
+                        <li>Email: {{ user.email }}</li>
+                        <li>Password: {{ user.password_hash }}</li>
+                    </ul>
+                </li>
+        {% endfor %}
+    </ul>
+</div>
