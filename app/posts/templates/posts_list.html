@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Mi Foro</h1>
+<div>
+    <ul>
+        {% if posts %}
+            {% for post in posts %}
+                <li><a href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>No hay posts disponibles.</li>
+        {% endif %}
+    </ul>
+</div>
+<div class="nav-post">
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ url_for('posts.post_create') }}">Crear nuevo post</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock content %}

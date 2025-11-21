@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+{% if post.category %}
+    <p>Categoría: {{ post.category.name }}</p>
+{% endif %}
+<div>
+    {{ post.content }}
+</div>
+<div>
+    <a href="{{ url_for('posts.post_delete', post_id=post.id) }}">Eliminar Post</a>
+</div>
+{% endblock content %}

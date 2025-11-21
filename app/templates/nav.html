@@ -1,0 +1,30 @@
+<nav style="border: 1px solid red; display: grid; grid-template-columns: repeat(3,1fr);">
+    <div class="logo">
+        <span>LOGO</span>
+    </div>
+    <ul class="menu">
+        <li>
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li>
+            <a href="{{ url_for('posts.posts_list') }}">Blog</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.users_list') }}">Lista de ususarios</a>
+        </li>
+    </ul>
+    <ul class="login-menu">
+        {% if not current_user.is_authenticated: %}
+        <li>
+            <a href="{{ url_for('main.login') }}">Iniciar sesion</a>
+        </li>
+        <li>
+            <a href="{{ url_for('main.register') }}">Registro</a>
+        </li>
+        {% else: %}
+        <li>
+            <a href="{{ url_for('main.logout') }}">Cerrar session</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

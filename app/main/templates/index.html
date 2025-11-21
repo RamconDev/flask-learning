@@ -1,12 +1,18 @@
-<h1>Main Index</h1>
-<div>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="index">
+        <h1>Main Index</h1>
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
             <ul class="flash-messages">
-            {% for message in messages %}
+                {% for message in messages %}
                 <li>{{ message }}</li>
-            {% endfor %}
+                {% endfor %}
             </ul>
-        {% endif %}
-    {% endwith %}
-</div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+{% endblock content %}

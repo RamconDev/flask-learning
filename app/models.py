@@ -30,3 +30,27 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(256), nullable=False)
+    content = db.Column(db.Text, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=True)
+    create_date = db.Column(db.DateTime, default=datetime.utcnow)
+    edit_date = db.Column(db.DateTime, nullable=True)
+
+    @classmethod
+    def create_post(cls, title, content, user_id, category_id=None):
+        post = cls(
+            title = title,
+            content = content,
+            user_id = user_id,
+            category_id = category_id
+        )
+
+        return post
