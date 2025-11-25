@@ -1,3 +1,6 @@
+# flask db migrate -m "Creación de modelo User"
+# flask db upgrade
+
 from app import db, bcrypt
 from app import login_manager
 from datetime import datetime
@@ -12,6 +15,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    posts = db.relationship('Post', backref='author', lazy=True)
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
@@ -35,12 +40,16 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
 
+    posts = db.relationship('Post', backref='category', lazy=True)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256), nullable=False)
     content = db.Column(db.Text, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=True)
+
     create_date = db.Column(db.DateTime, default=datetime.utcnow)
     edit_date = db.Column(db.DateTime, nullable=True)
 
@@ -49,7 +58,7 @@ class Post(db.Model):
         post = cls(
             title = title,
             content = content,
-            user_id = user_id,
+            author_id = user_id,
             category_id = category_id
         )
 

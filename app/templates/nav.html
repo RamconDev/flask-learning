@@ -1,30 +1,51 @@
-<nav style="border: 1px solid red; display: grid; grid-template-columns: repeat(3,1fr);">
-    <div class="logo">
-        <span>LOGO</span>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('main.index') }}"><span>LOGO</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{{ url_for('posts.posts_list') }}" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Blog
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="{{ url_for('posts.posts_list') }}">Ver Posts</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('posts.post_create') }}">Crear Post</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuarios
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="{{ url_for('main.users_list') }}">Lista de ususarios</a></li>
+          </ul>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled">Link</a>
+        </li> -->
+      </ul>
+      <div class="d-flex">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            User
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            {% if not current_user.is_authenticated: %}
+                <li><a class="dropdown-item" href="{{ url_for('main.login') }}">Login</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('main.register') }}">Register</a></li>
+            {% else: %}
+                <li><a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </div>
     </div>
-    <ul class="menu">
-        <li>
-            <a href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('posts.posts_list') }}">Blog</a>
-        </li>
-        <li>
-            <a href="{{ url_for('main.users_list') }}">Lista de ususarios</a>
-        </li>
-    </ul>
-    <ul class="login-menu">
-        {% if not current_user.is_authenticated: %}
-        <li>
-            <a href="{{ url_for('main.login') }}">Iniciar sesion</a>
-        </li>
-        <li>
-            <a href="{{ url_for('main.register') }}">Registro</a>
-        </li>
-        {% else: %}
-        <li>
-            <a href="{{ url_for('main.logout') }}">Cerrar session</a>
-        </li>
-        {% endif %}
-    </ul>
+  </div>
 </nav>

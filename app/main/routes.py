@@ -1,6 +1,3 @@
-# flask db migrate -m "Creación de modelo User"
-# flask db upgrade
-
 from app.main import main_bp as main
 
 from flask import render_template, redirect, url_for, flash, request
@@ -18,7 +15,7 @@ def index():
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        flash("Ya te has logueado!")
+        flash("Ya te has logueado!", "alert-warning")
         return redirect( url_for('main.index') )
     
     form = RegistrationForm()
@@ -32,15 +29,15 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        flash("Registro exitoso!")
-        return redirect( url_for('main.index') )
+        flash("Registro exitoso!", "alert-success")
+        return redirect( url_for('main.login') )
 
     return render_template('register.html',  form=form)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        flash("Ya te has logueado")
+        flash("Ya te has logueado", "alert-warning")
         return redirect( url_for('main.index') )
     
     form = LoginForm()
@@ -53,13 +50,14 @@ def login():
             ))).scalar_one_or_none()
 
         if not user or not user.check_password(form.password.data):
-            flash("Datos invalidaos")
+            flash("Datos invalidaos", "alert-danger")
             return redirect( url_for("main.login") )
         
         login_user(user, form.stay_loggedin.data)
 
         next_page = request.args.get('next')
 
+        flash(f"Bienvenido {user.name.capitalize()}", "alert-success")
         return redirect( next_page or url_for("main.index") )
 
     return render_template('login.html', form=form)
@@ -74,7 +72,7 @@ def logout():
 @login_required
 def users_list():
     users = db.session.execute(
-        db.select(User).order_by(User.username)
+        db.select(User).order_by(User.id.desc())
     ).scalars().all()
 
     return render_template("users_list.html", users=users)

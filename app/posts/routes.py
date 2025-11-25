@@ -33,7 +33,7 @@ def post_create():
         )
         db.session.add(post)
         db.session.commit()
-        flash("Post creado exitosamente!")
+        flash("Post creado exitosamente!", "alert-success")
         return redirect( url_for('posts.posts_list') )
 
     return render_template('/create_post.html', form=form)
@@ -42,7 +42,7 @@ def post_create():
 def post(post_id):
     post = db.session.get(Post, post_id)
     if not post:
-        flash("Post no encontrado")
+        flash("Post no encontrado", "alert-danger")
         return redirect(url_for('posts.posts_list'))
     return render_template('post_single.html', post=post)
 
@@ -54,9 +54,9 @@ def post_edit():
 def post_delete(post_id):
     post = db.session.get(Post, post_id)
     if not post:
-        flash("Post no encontrado")
+        flash("Post no encontrado", "alert-danger")
         return redirect(url_for('posts.posts_list'))
     db.session.delete(post)
     db.session.commit()
-    flash("Post eliminado exitosamente!")
+    flash("Post eliminado exitosamente!", "alert-success")
     return redirect(url_for('posts.posts_list'))

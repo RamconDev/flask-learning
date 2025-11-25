@@ -1,14 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ post.title }}</h1>
-{% if post.category %}
-    <p>Categoría: {{ post.category.name }}</p>
-{% endif %}
-<div>
-    {{ post.content }}
+<div id="post-{post.id}">
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="title">
+                            {{ post.title }}
+                        </h1>
+                        {% if post.category %}
+                            <h3>Categoría: {{ post.category.name }}</h3>
+                        {% endif %}
+                        <h4 class="subtitle">
+                            {{ post.create_date.strftime('%d/%m/%Y %H:%M') }}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="actions">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul>
+                        <li><a href="#">Editar Post</a></li>
+                        <li><a href="{{ url_for('posts.post_delete', post_id=post.id) }}">Eliminar Post</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {{ post.content }}
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
-<div>
-    <a href="{{ url_for('posts.post_delete', post_id=post.id) }}">Eliminar Post</a>
-</div>
-{% endblock content %}
+{% endblock %}

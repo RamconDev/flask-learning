@@ -1,35 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Create Post</h2>
-<div>
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.title.label }}
-            {{ form.title(size=100) }}
-            {% for error in form.title.errors %} 
-                <span style="color: red; display: block;">[{{ error }}]</span> 
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.category.label }}
-            {{ form.category(class="form-control") }}
-            {% for error in form.category.errors %} 
-                <span style="color: red;">[{{ error }}]</span> 
-            {% endfor %}
-        </div>
+<div id="create-post">
+    <section class="new-post-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Create Post</h2>
+                    <div>
+                        <form method="post">
+                            {{ form.hidden_tag() }}
+                            <div>
+                                {{ form.title.label }}
+                                {{ form.title(size=100) }}
+                                {% for error in form.title.errors %} 
+                                    <span style="color: red; display: block;">[{{ error }}]</span> 
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {{ form.category.label }}
+                                {{ form.category(class="form-control") }}
+                                {% for error in form.category.errors %} 
+                                    <span style="color: red;">[{{ error }}]</span> 
+                                {% endfor %}
+                            </div>
 
-        <div>
-            {{ form.content.label }}
-            {{ form.content }}
-            {% for error in form.content.errors %} 
-                <span style="color: red; display: block;">[{{ error }}]</span> 
-            {% endfor %}
+                            <div>
+                                {{ form.content.label }}
+                                {{ form.content }}
+                                {% for error in form.content.errors %} 
+                                    <span style="color: red; display: block;">[{{ error }}]</span> 
+                                {% endfor %}
+                            </div>
+                            <div>
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            {{ form.submit }}
-        </div>
-    </form>
+    </section>
 </div>
 {% endblock content %}
