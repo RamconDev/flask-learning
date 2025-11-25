@@ -1,20 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Lista de usuarios</h1>
-    <div>
-        <ul>
-            {% for user in users %}
-            <li>
-                {{ user.id }}
-                <ul>
-                    <li>Name: {{ user.name }}</li>
-                    <li>Username: {{ user.username }}</li>
-                    <li>Email: {{ user.email }}</li>
-                    <li>Password: {{ user.password_hash }}</li>
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+<div id="users">
+    <section class="list-users">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Lista de usuarios</h1>
+                    <div>
+                        <ul>
+                            {% for user in users %}
+                            <li>
+                                {{ user.id }}
+                                <ul>
+                                    <li>Name: {{ user.name }}</li>
+                                    <li>Username: {{ user.username }}</li>
+                                    <li>Email: {{ user.email }}</li>
+                                    <li>Password: {{ user.password_hash }}</li>
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock content %}
